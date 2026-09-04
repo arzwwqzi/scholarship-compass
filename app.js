@@ -3,16 +3,40 @@ const opportunities = [
     {
         id: 1,
         title: "Международная олимпиада по математике",
+        type: "Олимпиады",
+        format: "Онлайн",
         targetGrade: "10 класс",
-        country: "Казахстан"
+        country: "Казахстан",
+        deadline: "3 дня",
+        icon: "🎓",
+        bgColor: "#E8E0FF"
     },
     {
         id: 2,
         title: "Летняя экологическая программа",
+        type: "Летние школы",
+        format: "Офлайн",
         targetGrade: "10 класс",
-        country: "Казахстан"
+        country: "Казахстан",
+        deadline: "5 дней",
+        icon: "🌿",
+        bgColor: "#E8F5E9"
+    },
+    {
+        id: 3,
+        title: "Грант на обучение FLEX (США)",
+        type: "Обмен",
+        format: "Офлайн",
+        targetGrade: "9-10 класс",
+        country: "Казахстан",
+        deadline: "12 дней",
+        icon: "✈️",
+        bgColor: "#E6F0FF"
     }
 ];
+
+// Хранилище сохранённых ID возможностей
+let savedOppIds = JSON.parse(localStorage.getItem("savedOppIds")) || [];
 
 // 2. РАСЧЁТ MATCH %
 function calculateMatch(opp, userProfile) {
@@ -31,7 +55,7 @@ function calculateMatch(opp, userProfile) {
     return Math.min(score, 99);
 }
 
-// 3. ОБНОВЛЕНИЕ MATCH %
+// 3. ОБНОВЛЕНИЕ МАТЧЕЙ
 function updateMatchPercentages() {
     const userProfile = {
         grade: localStorage.getItem("userGrade") || "",
@@ -47,7 +71,104 @@ function updateMatchPercentages() {
     });
 }
 
-// 4. ПЕРЕКЛЮЧЕНИЕ ЭКРАНОВ И ИНИЦИАЛИЗАЦИЯ
+// 4. РЕНДЕР СОХРАНЁННЫХ КАРТОЧЕК (Экран 3)
+function renderSavedOpportunities() {
+    const savedContainer = document.querySelector("#view-saved .screen-content");
+    if (!savedContainer) return;
+
+    const savedItems = opportunities.filter(opp => savedOppIds.includes(opp.id));
+
+    if (savedItems.length === 0) {
+        savedContainer.innerHTML = `
+            <div style="text-align: center; color: #8E8E93; margin-top: 40px;">
+                <p style="font-size: 40px; margin-bottom: 10px;">🔖</p>
+                <p style="font-weight: 600;">У вас пока нет сохранённых программ</p>
+                <p style="font-size: 13px; margin-top: 4px;">Нажмите на закладку у любой программы, чтобы добавить её сюда</p>
+            </div>
+        `;
+        return;
+    }
+
+    const userProfile = {
+        grade: localStorage.getItem("userGrade") || "",
+        country: localStorage.getItem("userCountry") || ""
+    };
+
+    savedContainer.innerHTML = savedItems.map(opp => `
+        <div class="opportunity-card" data-id="${opp.id}">
+            <div class="opp-icon" style="background:${opp.bgColor}">${opp.icon}</div>
+            <div class="opp-info">
+                <div class="opp-title">${opp.title}</div>
+                <div class="opp-tags">
+                    <span class="tag">${opp.format}</span>
+                    <span class="tag">${opp.targetGrade}</span>
+                </div>
+            </div>
+            <div class="opp-right">
+                <span class="match">${calculateMatch(opp, userProfile)}%</span>
+                <button class="save-btn active" data-id="${opp.id}" style="color: #FF3B30;">🔖</button>
+            </div>
+        </div>
+    `).join("");
+
+    attachSaveListeners();
+}
+
+// 5. ОБРАБОТКА КЛИКА ПО ЗАКЛАДКЕ (ИЗБРАННОЕ)
+function attachSaveListeners() {
+    const saveBtns = document.querySelectorAll(".save-btn");
+    saveBtns.forEach(btn => {
+        const id = Number(btn.getAttribute("data-id")) || 1; // По умолчанию 1 для статических
+        
+        // Показываем активное состояние, если в сохранённых
+        if (savedOppIds.includes(id)) {
+            btn.classList.add("active");
+            btn.style.opacity = "1";
+        } else {
+            btn.classList.remove("active");
+            btn.style.opacity = "0.5";
+        }
+
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            toggleSave(id);
+        };
+    });
+}
+
+function toggleSave(id) {
+    if (savedOppIds.includes(id)) {
+        savedOppIds = savedOppIds.filter(savedId => savedId !== id);
+    } else {
+        savedOppIds.push(id);
+    }
+
+    localStorage.setItem("savedOppIds", JSON.stringify(savedOppIds));
+    attachSaveListeners();
+    renderSavedOpportunities();
+}
+
+// 6. ПОИСК И ФИЛЬТРАЦИЯВ КАТАЛОГЕ
+function setupSearch() {
+    const searchInputs = document.querySelectorAll(".search-box input");
+    searchInputs.forEach(input => {
+        input.addEventListener("input", (e) => {
+            const query = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll(".opportunity-card, .deadline-card");
+
+            cards.forEach(card => {
+                const title = card.querySelector(".opp-title, h3")?.textContent.toLowerCase() || "";
+                if (title.includes(query)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        });
+    });
+}
+
+// 7. ИНИЦИАЛИЗАЦИЯ И НАВИГАЦИЯ
 document.addEventListener("DOMContentLoaded", () => {
     const navItems = document.querySelectorAll(".bottom-nav .nav-item");
     const views = document.querySelectorAll(".view");
@@ -66,10 +187,14 @@ document.addEventListener("DOMContentLoaded", () => {
             if (targetView) {
                 targetView.classList.add("active");
             }
+
+            if (target === "saved") {
+                renderSavedOpportunities();
+            }
         });
     });
 
-    // Загрузка профиля
+    // Загрузка данных профиля
     const nameInput = document.getElementById("user-name");
     const gradeInput = document.getElementById("user-grade");
     const countryInput = document.getElementById("user-country");
@@ -94,4 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     updateMatchPercentages();
+    attachSaveListeners();
+    setupSearch();
+    renderSavedOpportunities();
 });
