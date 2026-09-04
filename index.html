@@ -9,102 +9,49 @@
 <body>
 
 <div class="app-container">
-    <div class="phone">
-        <div class="status-bar">
-            <span class="time">9:41</span>
-            <span class="status-icons">📶 🔋</span>
-        </div>
+    <div class="views-wrapper">
 
-        <!-- ==================== ЭКРАН 1: ГЛАВНАЯ ==================== -->
+        <!-- ЭКРАН 1: ГЛАВНАЯ -->
         <div class="view active" id="view-home">
             <div class="screen-header">
                 <h1>Привет, Алия 👋</h1>
                 <div class="subtitle">Найдено 23 новых возможности</div>
             </div>
+
             <div class="screen-content">
-                <div class="search-bar">
+                <div class="search-box">
                     <span class="search-icon">🔍</span>
-                    <input type="text" placeholder="Поиск: олимпиады, MUN, гранты...">
+                    <input type="text" placeholder="Поиск: олимпиады, MUN, гранты">
                     <button class="filter-btn">⚙️</button>
                 </div>
 
-                <div class="section-title">
-                    <h2>🔥 Ближайшие дедлайны</h2>
-                    <a href="#">Все</a>
-                </div>
-                <div class="h-scroll">
-                    <div class="deadline-card">
-                        <span class="badge">3 дня</span>
-                        <div class="title">Международная олимпиада по математике</div>
-                        <div class="meta">Онлайн · 10 класс</div>
-                    </div>
-                    <div class="deadline-card" style="border-left-color: var(--warning);">
-                        <span class="badge" style="background:#FFF8E7;color:#B7791F;">7 дней</span>
-                        <div class="title">Летняя школа по физике в Астане</div>
-                        <div class="meta">Оффлайн · 9-11 класс</div>
-                    </div>
-                    <div class="deadline-card" style="border-left-color: var(--success);">
-                        <span class="badge" style="background:#E8FBF5;color:#047857;">12 дней</span>
-                        <div class="title">MUN Conference Almaty 2025</div>
-                        <div class="meta">Оффлайн · 8-11 класс</div>
-                    </div>
-                    <div class="deadline-card">
-                        <span class="badge">5 дней</span>
-                        <div class="title">Волонтёрский проект «Эко-Казахстан»</div>
-                        <div class="meta">Онлайн · 14+</div>
-                    </div>
+                <div class="section-title">🔥 Ближайшие дедлайны <a href="#" class="see-all">Все</a></div>
+                <div class="deadline-card">
+                    <div class="badge urgency">3 дня</div>
+                    <h3>Международная олимпиада по математике</h3>
+                    <p>Онлайн · 10 класс</p>
                 </div>
 
-                <div class="section-title">
-                    <h2>📚 Категории</h2>
-                    <a href="#">Все</a>
-                </div>
+                <div class="section-title">📚 Категории <a href="#" class="see-all">Все</a></div>
                 <div class="categories-grid">
-                    <div class="category-item">
-                        <div class="category-icon" style="background:#E8E0FF;">🧠</div>
-                        <span>Олимпиады</span>
-                    </div>
-                    <div class="category-item">
-                        <div class="category-icon" style="background:#E0F0FF;">✈️</div>
-                        <span>Обмен</span>
-                    </div>
-                    <div class="category-item">
-                        <div class="category-icon" style="background:#E8FBF5;">🏖️</div>
-                        <span>Летние школы</span>
-                    </div>
-                    <div class="category-item">
-                        <div class="category-icon" style="background:#FFF3E6;">🤝</div>
-                        <span>Волонтёрство</span>
-                    </div>
-                    <div class="category-item">
-                        <div class="category-icon" style="background:#FFE8EC;">🎤</div>
-                        <span>MUN/Дебаты</span>
-                    </div>
-                    <div class="category-item">
-                        <div class="category-icon" style="background:#E6F7FF;">🔬</div>
-                        <span>Наука</span>
-                    </div>
-                    <div class="category-item">
-                        <div class="category-icon" style="background:#FFFBE6;">💰</div>
-                        <span>Гранты</span>
-                    </div>
-                    <div class="category-item">
-                        <div class="category-icon" style="background:#F0F0F0;">➕</div>
-                        <span>Ещё</span>
-                    </div>
+                    <div class="cat-item"><div class="cat-icon" style="background:#F0E6FF">🧠</div>Олимпиады</div>
+                    <div class="cat-item"><div class="cat-icon" style="background:#E6F0FF">✈️</div>Обмен</div>
+                    <div class="cat-item"><div class="cat-icon" style="background:#E6FFF0">🏖️</div>Летние школы</div>
+                    <div class="cat-item"><div class="cat-icon" style="background:#FFF9E6">🤝</div>Волонтёрство</div>
+                    <div class="cat-item"><div class="cat-icon" style="background:#FFE6E6">🎤</div>MUN/Дебаты</div>
+                    <div class="cat-item"><div class="cat-icon" style="background:#E6FCFF">🔬</div>Наука</div>
+                    <div class="cat-item"><div class="cat-icon" style="background:#FFF0E6">💰</div>Гранты</div>
+                    <div class="cat-item"><div class="cat-icon" style="background:#F5F5F5">➕</div>Ещё</div>
                 </div>
 
-                <div class="section-title">
-                    <h2>✨ Рекомендуем вам</h2>
-                    <a href="#">См. все</a>
-                </div>
+                <div class="section-title">✨ Рекомендуем вам <a href="#" class="see-all">См. все</a></div>
                 <div class="opportunity-card">
-                    <div class="opp-icon" style="background:#E8E0FF;">🧠</div>
+                    <div class="opp-icon" style="background:#E8F5E9">🌿</div>
                     <div class="opp-info">
-                        <div class="opp-title">Олимпиада по программированию</div>
+                        <div class="opp-title">Летняя экологическая программа</div>
                         <div class="opp-tags">
-                            <span class="tag">Онлайн</span>
-                            <span class="tag">10 класс</span>
+                            <span class="tag">Офлайн</span>
+                            <span class="tag">Алматы</span>
                         </div>
                     </div>
                     <div class="opp-right">
@@ -113,62 +60,22 @@
                         <button class="save-btn">🔖</button>
                     </div>
                 </div>
-                <div class="opportunity-card">
-                    <div class="opp-icon" style="background:#E8FBF5;">🏖️</div>
-                    <div class="opp-info">
-                        <div class="opp-title">Летняя школа по английскому</div>
-                        <div class="opp-tags">
-                            <span class="tag">Оффлайн</span>
-                            <span class="tag">Астана</span>
-                        </div>
-                    </div>
-                    <div class="opp-right">
-                        <span class="match">89%</span>
-                        <span class="deadline">Дедлайн: 12 дней</span>
-                        <button class="save-btn">🔖</button>
-                    </div>
-                </div>
             </div>
-          
-        <!-- ==================== ЭКРАН 2: КАТАЛОГ ==================== -->
+        </div>
+
+        <!-- ЭКРАН 2: КАТАЛОГ -->
         <div class="view" id="view-catalog">
             <div class="screen-header">
                 <h1>Каталог</h1>
-                <div class="subtitle">Фильтры для точного поиска</div>
+                <div class="subtitle">Все доступные программы и гранты</div>
             </div>
             <div class="screen-content">
-                <div class="search-bar">
+                <div class="search-box">
                     <span class="search-icon">🔍</span>
-                    <input type="text" placeholder="Поиск по названию...">
-                    <button class="filter-btn">⚙️</button>
+                    <input type="text" placeholder="Поиск по программам...">
                 </div>
-
-                <div class="filter-group">
-                    <label>Предмет</label>
-                    <div class="chips">
-                        <span class="chip active">Математика</span>
-                        <span class="chip">Физика</span>
-                        <span class="chip">Химия</span>
-                        <span class="chip">Биология</span>
-                    </div>
-                </div>
-
-                <div class="filter-group">
-                    <label>Формат</label>
-                    <div class="chips">
-                        <span class="chip active">Онлайн</span>
-                        <span class="chip">Оффлайн</span>
-                    </div>
-                </div>
-
-                <button class="apply-btn">🎯 Показать 12 результатов</button>
-
-                <div class="section-title" style="margin-top:16px;">
-                    <h2>Результаты</h2>
-                </div>
-
-                <div class="opportunity-card" data-target="detail">
-                    <div class="opp-icon" style="background:#E8E0FF;">🧠</div>
+                <div class="opportunity-card">
+                    <div class="opp-icon" style="background:#E8E0FF">🎓</div>
                     <div class="opp-info">
                         <div class="opp-title">Международная олимпиада по математике</div>
                         <div class="opp-tags">
@@ -183,9 +90,9 @@
                     </div>
                 </div>
             </div>
-          
+        </div>
 
-        <!-- ==================== ЭКРАН 3: СОХРАНЕННОЕ ==================== -->
+        <!-- ЭКРАН 3: СОХРАНЁННОЕ -->
         <div class="view" id="view-saved">
             <div class="screen-header">
                 <h1>Сохранённые</h1>
@@ -193,7 +100,7 @@
             </div>
             <div class="screen-content">
                 <div class="opportunity-card">
-                    <div class="opp-icon" style="background:#E8E0FF;">🧠</div>
+                    <div class="opp-icon" style="background:#E8E0FF">🎓</div>
                     <div class="opp-info">
                         <div class="opp-title">Международная олимпиада по математике</div>
                         <div class="opp-tags">
@@ -207,9 +114,9 @@
                     </div>
                 </div>
             </div>
-          
+        </div>
 
-        <!-- ==================== ЭКРАН 4: ПОРТФОЛИО ==================== -->
+        <!-- ЭКРАН 4: ПОРТФОЛИО -->
         <div class="view" id="view-portfolio">
             <div class="screen-header">
                 <h1>Портфолио</h1>
@@ -217,77 +124,65 @@
             </div>
             <div class="screen-content">
                 <div class="achievement-item">
-                    <div class="ach-icon">🧠</div>
+                    <div class="ach-icon">🏆</div>
                     <div class="ach-info">
                         <div class="ach-title">Олимпиада по математике — 2 место</div>
                         <div class="ach-date">Декабрь 2024</div>
                     </div>
                 </div>
-                <div class="achievement-item">
-                    <div class="ach-icon">🎤</div>
-                    <div class="ach-info">
-                        <div class="ach-title">MUN Conference Almaty — Делегат</div>
-                        <div class="ach-date">Октябрь 2024</div>
-                    </div>
-                </div>
-                <button style="width: 100%; padding: 14px; border-radius: 16px; background: transparent; border: 2px dashed var(--border); color: var(--text-secondary); font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px;">
+                <button style="width: 100%; padding: 14px; border-radius: 16px; background: transparent; border: 1.5px dashed var(--primary); color: var(--primary); font-weight: 600; cursor: pointer; margin-top: 10px;">
                     ➕ Добавить сертификат / достижение
                 </button>
             </div>
-           
-        <!-- ==================== ЭКРАН 5: ПРОФИЛЬ ==================== -->
+        </div>
+
+        <!-- ЭКРАН 5: ПРОФИЛЬ -->
         <div class="view" id="view-profile">
             <div class="screen-header">
                 <h1>Профиль</h1>
                 <div class="subtitle">Ваши данные и настройки</div>
             </div>
-            
             <div class="screen-content">
                 <form id="profile-form" class="profile-card">
                     <div class="input-group">
                         <label for="user-name">Имя</label>
                         <input type="text" id="user-name" placeholder="Введите имя">
                     </div>
-
                     <div class="input-group">
                         <label for="user-grade">Класс / Курс</label>
                         <input type="text" id="user-grade" placeholder="Например: 10 класс">
                     </div>
-
                     <div class="input-group">
                         <label for="user-country">Страна / Город</label>
                         <input type="text" id="user-country" placeholder="Например: Казахстан, Алматы">
                     </div>
-
                     <button type="submit" class="save-btn">Сохранить изменения</button>
                 </form>
             </div>
         </div>
 
-        <!-- НИЖНЯЯ НАВИГАЦИЯ -->
-            
-        <div class="bottom-nav">
-            <button class="nav-item active" data-target="home">
-                <span class="icon">🏠</span> Главная
-            </button>
-            <button class="nav-item" data-target="catalog">
-                <span class="icon">🔍</span> Каталог
-            </button>
-            <button class="nav-item center" data-target="saved">
-                <span class="icon">🔖</span> Сохр.
-            </button>
-            <button class="nav-item" data-target="portfolio">
-                <span class="icon">🏆</span> Портфолио
-            </button>
-            <button class="nav-item" data-target="profile">
-                <span class="icon">👤</span> Профиль
-            </button>
-        </div>
+    </div>
 
+    <!-- ЕДИНСТВЕННАЯ НИЖНЯЯ НАВИГАЦИЯ -->
+    <div class="bottom-nav">
+        <button class="nav-item active" data-target="home">
+            <span class="icon">🏠</span> Главная
+        </button>
+        <button class="nav-item" data-target="catalog">
+            <span class="icon">🔍</span> Каталог
+        </button>
+        <button class="nav-item center" data-target="saved">
+            <span class="icon">🔖</span> Сохр.
+        </button>
+        <button class="nav-item" data-target="portfolio">
+            <span class="icon">🏆</span> Портфолио
+        </button>
+        <button class="nav-item" data-target="profile">
+            <span class="icon">👤</span> Профиль
+        </button>
     </div>
 </div>
 
 <script src="app.js"></script>
 </body>
 </html>
-        
