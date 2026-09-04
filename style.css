@@ -23,36 +23,33 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background: #1a1a2e;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #121212;
+    margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
     min-height: 100vh;
-    padding: 20px 10px;
-    color: var(--text);
-    -webkit-font-smoothing: antialiased;
 }
 
-/* ОБЩИЙ КОНТЕЙНЕР ДЛЯ ОДНОГО ТЕЛЕФОНА */
+/* ОБЩИЙ КОНТЕЙНЕР */
 .app-container {
-    max-width: 420px;
+    max-width: 430px;
     width: 100%;
+    background-color: var(--card);
+    min-height: 100vh;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
 /* КАРКАС ТЕЛЕФОНА */
 .phone {
     background: var(--bg);
-    border-radius: 44px;
-    border: 8px solid #0d0d1a;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.5), 0 0 0 2px #2a2a4a;
-    overflow: hidden;
-    height: 780px;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     position: relative;
 }
-
 /* СТАТУС-БАР */
 .status-bar {
     display: flex;
