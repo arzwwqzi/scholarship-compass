@@ -55,7 +55,7 @@ function calculateMatch(opp, userProfile) {
     return Math.min(score, 99);
 }
 
-// 3. ОБНОВЛЕНИЕ ДАННЫХ И ИМЕНИ В ИНТЕРФЕЙСЕ
+// 3. ОБНОВЛЕНИЕ ДАННЫХ И ИМЕНИ
 function updateUserDataAndMatches() {
     const userName = localStorage.getItem("userName") || "Гость";
     const userGrade = localStorage.getItem("userGrade") || "";
@@ -63,13 +63,11 @@ function updateUserDataAndMatches() {
 
     const userProfile = { grade: userGrade, country: userCountry };
 
-    // Обновление приветствия на главной
     const welcomeHeader = document.querySelector("#view-home .screen-header h1");
     if (welcomeHeader) {
         welcomeHeader.textContent = `Привет, ${userName} 👋`;
     }
 
-    // Обновление бейджей совпадения (Match %)
     const matchBadges = document.querySelectorAll(".match");
     matchBadges.forEach((badge, index) => {
         if (opportunities[index]) {
@@ -122,7 +120,7 @@ function renderSavedOpportunities() {
     attachSaveListeners();
 }
 
-// 5. ОБРАБОТКА ИЗБРАННОГО (ЗАКЛАДКИ)
+// 5. ОБРАБОТКА ИЗБРАННОГО
 function attachSaveListeners() {
     const saveBtns = document.querySelectorAll(".save-btn");
     saveBtns.forEach(btn => {
@@ -177,28 +175,30 @@ function filterCards(query) {
     });
 }
 
-// 7. КЛИК ПО КАТЕГОРИЯМ
+// 7. НАДЕЖНЫЙ КЛИК ПО КАТЕГОРИЯМ
 function setupCategories() {
     const categoryItems = document.querySelectorAll(".cat-item");
     categoryItems.forEach(item => {
-        item.addEventListener("click", () => {
-            const fullText = item.textContent.trim();
-            // Берём название категории без эмодзи
-            const categoryName = fullText.replace(/^[^\s]+\s*/, '');
+        item.style.cursor = "pointer"; // Делаем курсор кликабельным
+        
+        item.onclick = () => {
+            // Очищаем текст от иконок и лишних пробелов
+            let rawText = item.innerText || item.textContent;
+            let categoryName = rawText.replace(/[^\r\nа-яА-Яa-zA-Z/]/g, '').trim();
 
             if (categoryName === "Ещё" || !categoryName) return;
 
-            // Переход на экран Каталога
-            const catalogNavBtn = document.querySelector('.bottom-nav .nav-item[data-target="catalog"]');
-            if (catalogNavBtn) catalogNavBtn.click();
+            // 1. Переходим в Каталог
+            const catalogBtn = document.querySelector('.bottom-nav .nav-item[data-target="catalog"]');
+            if (catalogBtn) catalogBtn.click();
 
-            // Вставка категории в поле поиска каталога
-            const catalogSearchInput = document.querySelector("#view-catalog .search-box input");
-            if (catalogSearchInput) {
-                catalogSearchInput.value = categoryName;
+            // 2. Вставляем название в поиск и фильтруем
+            const catalogInput = document.querySelector("#view-catalog .search-box input");
+            if (catalogInput) {
+                catalogInput.value = categoryName;
                 filterCards(categoryName.toLowerCase());
             }
-        });
+        };
     });
 }
 
@@ -228,7 +228,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Загрузка сохранённого профиля
     const nameInput = document.getElementById("user-name");
     const gradeInput = document.getElementById("user-grade");
     const countryInput = document.getElementById("user-country");
@@ -237,7 +236,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (gradeInput) gradeInput.value = localStorage.getItem("userGrade") || "";
     if (countryInput) countryInput.value = localStorage.getItem("userCountry") || "";
 
-    // Обработка сохранения профиля
     const profileForm = document.getElementById("profile-form");
     if (profileForm) {
         profileForm.addEventListener("submit", (e) => {
