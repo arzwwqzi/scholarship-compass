@@ -309,60 +309,48 @@
         <div class="view" id="view-profile">
             <div class="screen-header">
                 <h1>Профиль</h1>
+                <div class="subtitle">Ваши данные и настройки</div>
             </div>
+            
             <div class="screen-content">
-                <div class="profile-header">
-                    <div class="avatar">А</div>
-                    <div class="info">
-                        <h3>Алия Мухамедова</h3>
-                        <p>10 класс · Казахстан · B2</p>
+                <form id="profile-form" class="profile-card">
+                    <div class="input-group">
+                        <label for="user-name">Имя</label>
+                        <input type="text" id="user-name" placeholder="Введите имя">
                     </div>
-                </div>
 
-                <div class="stats-row">
-                    <div class="stat-box">
-                        <div class="number">12</div>
-                        <div class="label">Сохранено</div>
+                    <div class="input-group">
+                        <label for="user-grade">Класс / Курс</label>
+                        <input type="text" id="user-grade" placeholder="Например: 10 класс">
                     </div>
-                    <div class="stat-box">
-                        <div class="number">5</div>
-                        <div class="label">Достижения</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="number">92%</div>
-                        <div class="label">Профиль</div>
-                    </div>
-                </div>
 
-                <div class="section-title">
-                    <h2>⚙️ Настройки рекомендаций</h2>
-                </div>
-                <div class="filter-group">
-                    <label>Интересы</label>
-                    <div class="chips">
-                        <span class="chip active">Математика</span>
-                        <span class="chip active">Физика</span>
-                        <span class="chip">Программирование</span>
+                    <div class="input-group">
+                        <label for="user-country">Страна / Город</label>
+                        <input type="text" id="user-country" placeholder="Например: Казахстан, Алматы">
                     </div>
-                </div>
+
+                    <button type="submit" class="save-btn">Сохранить изменения</button>
+                </form>
             </div>
-            <div class="bottom-nav">
-                <button class="nav-item" data-target="home">
-                    <span class="icon">🏠</span> Главная
-                </button>
-                <button class="nav-item" data-target="catalog">
-                    <span class="icon">🔍</span> Каталог
-                </button>
-                <button class="nav-item center" data-target="saved">
-                    <span class="icon">🔖</span> Сохр.
-                </button>
-                <button class="nav-item" data-target="portfolio">
-                    <span class="icon">🏆</span> Портфолио
-                </button>
-                <button class="nav-item active" data-target="profile">
-                    <span class="icon">👤</span> Профиль
-                </button>
-            </div>
+        </div>
+
+        <!-- НИЖНЯЯ НАВИГАЦИЯ -->
+        <div class="bottom-nav">
+            <button class="nav-item active" data-target="home">
+                <span class="icon">🏠</span> Главная
+            </button>
+            <button class="nav-item" data-target="catalog">
+                <span class="icon">🔍</span> Каталог
+            </button>
+            <button class="nav-item center" data-target="saved">
+                <span class="icon">🔖</span> Сохр.
+            </button>
+            <button class="nav-item" data-target="portfolio">
+                <span class="icon">🏆</span> Портфолио
+            </button>
+            <button class="nav-item" data-target="profile">
+                <span class="icon">👤</span> Профиль
+            </button>
         </div>
 
     </div>
@@ -371,3 +359,4 @@
 <script src="app.js"></script>
 </body>
 </html>
+        
