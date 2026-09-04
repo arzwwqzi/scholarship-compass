@@ -175,34 +175,34 @@ function filterCards(query) {
     });
 }
 
-// 7. НАДЕЖНЫЙ КЛИК ПО КАТЕГОРИЯМ
+// НАДЕЖНЫЙ КЛИК ПО КАТЕГОРИЯМ
 function setupCategories() {
     const categoryItems = document.querySelectorAll(".cat-item");
+    
     categoryItems.forEach(item => {
-        item.style.cursor = "pointer"; // Делаем курсор кликабельным
+        item.style.cursor = "pointer";
         
-        item.onclick = () => {
-            // Очищаем текст от иконок и лишних пробелов
-            let rawText = item.innerText || item.textContent;
-            let categoryName = rawText.replace(/[^\r\nа-яА-Яa-zA-Z/]/g, '').trim();
+     item.addEventListener("click", () => {
+            // Извлекаем прямо название категории
+            const categoryName = item.innerText.replace(/[^\u0400-\u04FFa-zA-Z]/g, '').trim();
 
             if (categoryName === "Ещё" || !categoryName) return;
-
-            // 1. Переходим в Каталог
+            // 1. Переключаем вкладку на Каталог
             const catalogBtn = document.querySelector('.bottom-nav .nav-item[data-target="catalog"]');
-            if (catalogBtn) catalogBtn.click();
+            if (catalogBtn) {
+                catalogBtn.click();
+            }
 
-            // 2. Вставляем название в поиск и фильтруем
+            // 2. Вставляем название категории в поиск и фильтруем
             const catalogInput = document.querySelector("#view-catalog .search-box input");
             if (catalogInput) {
                 catalogInput.value = categoryName;
                 filterCards(categoryName.toLowerCase());
             }
-        };
+        });
     });
 }
-
-// 8. ИНИЦИАЛИЗАЦИЯ И НАВИГАЦИЯ
+ИНИЦИАЛИЗАЦИЯ И НАВИГАЦИЯ
 document.addEventListener("DOMContentLoaded", () => {
     const navItems = document.querySelectorAll(".bottom-nav .nav-item");
     const views = document.querySelectorAll(".view");
