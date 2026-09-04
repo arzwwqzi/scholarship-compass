@@ -11,12 +11,6 @@ const opportunities = [
         title: "Летняя экологическая программа",
         targetGrade: "10 класс",
         country: "Казахстан"
-    },
-    {
-        id: 3,
-        title: "Международная олимпиада по математике",
-        targetGrade: "10 класс",
-        country: "Казахстан"
     }
 ];
 
@@ -24,9 +18,7 @@ const opportunities = [
 function calculateMatch(opp, userProfile) {
     let score = 50;
 
-    if (!userProfile.grade && !userProfile.country) {
-        return 75;
-    }
+    if (!userProfile.grade && !userProfile.country) return 75;
 
     if (userProfile.grade && opp.targetGrade.toLowerCase().includes(userProfile.grade.toLowerCase())) {
         score += 30;
@@ -39,7 +31,7 @@ function calculateMatch(opp, userProfile) {
     return Math.min(score, 99);
 }
 
-// 3. ОБНОВЛЕНИЕ MATCH % В ИНТЕРФЕЙСЕ
+// 3. ОБНОВЛЕНИЕ MATCH %
 function updateMatchPercentages() {
     const userProfile = {
         grade: localStorage.getItem("userGrade") || "",
@@ -65,14 +57,11 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             const target = item.getAttribute("data-target");
 
-            // Снимаем класс active со всех кнопок и экранов
             navItems.forEach(i => i.classList.remove("active"));
             views.forEach(v => v.classList.remove("active"));
 
-            // Активируем нажатую кнопку
             item.classList.add("active");
 
-            // Находим и показываем нужный экран
             const targetView = document.getElementById(`view-${target}`);
             if (targetView) {
                 targetView.classList.add("active");
@@ -80,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Загрузка данных профиля из localStorage
+    // Загрузка профиля
     const nameInput = document.getElementById("user-name");
     const gradeInput = document.getElementById("user-grade");
     const countryInput = document.getElementById("user-country");
@@ -89,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (gradeInput) gradeInput.value = localStorage.getItem("userGrade") || "";
     if (countryInput) countryInput.value = localStorage.getItem("userCountry") || "";
 
-    // Обработка сохранения профиля
+    // Сохранение профиля
     const profileForm = document.getElementById("profile-form");
     if (profileForm) {
         profileForm.addEventListener("submit", (e) => {
