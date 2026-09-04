@@ -71,7 +71,7 @@ function updateMatchPercentages() {
     });
 }
 
-// 4. РЕНДЕР СОХРАНЁННЫХ КАРТОЧЕК (Экран 3)
+// 4. РЕНДЕР СОХРАНЁННЫХ КАРТОЧЕК
 function renderSavedOpportunities() {
     const savedContainer = document.querySelector("#view-saved .screen-content");
     if (!savedContainer) return;
@@ -114,13 +114,12 @@ function renderSavedOpportunities() {
     attachSaveListeners();
 }
 
-// 5. ОБРАБОТКА КЛИКА ПО ЗАКЛАДКЕ (ИЗБРАННОЕ)
+// 5. ОБРАБОТКА ИЗБРАННОГО
 function attachSaveListeners() {
     const saveBtns = document.querySelectorAll(".save-btn");
     saveBtns.forEach(btn => {
-        const id = Number(btn.getAttribute("data-id")) || 1; // По умолчанию 1 для статических
+        const id = Number(btn.getAttribute("data-id")) || 1;
         
-        // Показываем активное состояние, если в сохранённых
         if (savedOppIds.includes(id)) {
             btn.classList.add("active");
             btn.style.opacity = "1";
@@ -148,27 +147,53 @@ function toggleSave(id) {
     renderSavedOpportunities();
 }
 
-// 6. ПОИСК И ФИЛЬТРАЦИЯВ КАТАЛОГЕ
+// 6. ПОИСК И ФИЛЬТРАЦИЯ
 function setupSearch() {
     const searchInputs = document.querySelectorAll(".search-box input");
     searchInputs.forEach(input => {
         input.addEventListener("input", (e) => {
-            const query = e.target.value.toLowerCase();
-            const cards = document.querySelectorAll(".opportunity-card, .deadline-card");
-
-            cards.forEach(card => {
-                const title = card.querySelector(".opp-title, h3")?.textContent.toLowerCase() || "";
-                if (title.includes(query)) {
-                    card.style.display = "flex";
-                } else {
-                    card.style.display = "none";
-                }
-            });
+            filterCards(e.target.value.toLowerCase());
         });
     });
 }
 
-// 7. ИНИЦИАЛИЗАЦИЯ И НАВИГАЦИЯ
+function filterCards(query) {
+    const cards = document.querySelectorAll(".opportunity-card, .deadline-card");
+    cards.forEach(card => {
+        const title = card.querySelector(".opp-title, h3")?.textContent.toLowerCase() || "";
+        if (title.includes(query)) {
+            card.style.display = "flex";
+        } else {
+            card.style.display = "none";
+        }
+    });
+}
+
+// 7. НАЖАТИЕ НА КАТЕГОРИИ
+function setupCategories() {
+    const categoryItems = document.querySelectorAll(".cat-item");
+    categoryItems.forEach(item => {
+        item.addEventListener("click", () => {
+            // Извлекаем название категории (без иконки/эмодзи)
+            let categoryText = item.textContent.trim().replace(/^[\s\S]*?\s/, '');
+            
+            if (categoryText === "Ещё" || !categoryText) return;
+
+            // 1. Переключаем на экран Каталога
+            const catalogNavBtn = document.querySelector('.bottom-nav .nav-item[data-target="catalog"]');
+            if (catalogNavBtn) catalogNavBtn.click();
+
+            // 2. Вставляем название категории в поиск Каталога и фильтруем
+            const catalogSearchInput = document.querySelector("#view-catalog .search-box input");
+            if (catalogSearchInput) {
+                catalogSearchInput.value = categoryText;
+                filterCards(categoryText.toLowerCase());
+            }
+        });
+    });
+}
+
+// 8. ИНИЦИАЛИЗАЦИЯ И НАВИГАЦИЯ
 document.addEventListener("DOMContentLoaded", () => {
     const navItems = document.querySelectorAll(".bottom-nav .nav-item");
     const views = document.querySelectorAll(".view");
@@ -194,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Загрузка данных профиля
+    // Загрузка профиля
     const nameInput = document.getElementById("user-name");
     const gradeInput = document.getElementById("user-grade");
     const countryInput = document.getElementById("user-country");
@@ -221,5 +246,6 @@ document.addEventListener("DOMContentLoaded", () => {
     updateMatchPercentages();
     attachSaveListeners();
     setupSearch();
+    setupCategories();
     renderSavedOpportunities();
 });
