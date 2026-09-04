@@ -16,7 +16,7 @@ const opportunities = [
         title: "Летняя экологическая программа",
         type: "Летние школы",
         format: "Офлайн",
-        targetGrade: "10 класс",
+        targetGrade: "8 класс",
         country: "Казахстан",
         deadline: "5 дней",
         icon: "🌿",
@@ -27,7 +27,7 @@ const opportunities = [
         title: "Грант на обучение FLEX (США)",
         type: "Обмен",
         format: "Офлайн",
-        targetGrade: "9-10 класс",
+        targetGrade: "8-10 класс",
         country: "Казахстан",
         deadline: "12 дней",
         icon: "✈️",
@@ -35,7 +35,7 @@ const opportunities = [
     }
 ];
 
-// Хранилище сохранённых ID возможностей
+// Хранилище сохранённых ID
 let savedOppIds = JSON.parse(localStorage.getItem("savedOppIds")) || [];
 
 // 2. РАСЧЁТ MATCH %
@@ -55,13 +55,21 @@ function calculateMatch(opp, userProfile) {
     return Math.min(score, 99);
 }
 
-// 3. ОБНОВЛЕНИЕ МАТЧЕЙ
-function updateMatchPercentages() {
-    const userProfile = {
-        grade: localStorage.getItem("userGrade") || "",
-        country: localStorage.getItem("userCountry") || ""
-    };
+// 3. ОБНОВЛЕНИЕ ДАННЫХ И ИМЕНИ В ИНТЕРФЕЙСЕ
+function updateUserDataAndMatches() {
+    const userName = localStorage.getItem("userName") || "Гость";
+    const userGrade = localStorage.getItem("userGrade") || "";
+    const userCountry = localStorage.getItem("userCountry") || "";
 
+    const userProfile = { grade: userGrade, country: userCountry };
+
+    // Обновление приветствия на главной
+    const welcomeHeader = document.querySelector("#view-home .screen-header h1");
+    if (welcomeHeader) {
+        welcomeHeader.textContent = `Привет, ${userName} 👋`;
+    }
+
+    // Обновление бейджей совпадения (Match %)
     const matchBadges = document.querySelectorAll(".match");
     matchBadges.forEach((badge, index) => {
         if (opportunities[index]) {
@@ -114,7 +122,7 @@ function renderSavedOpportunities() {
     attachSaveListeners();
 }
 
-// 5. ОБРАБОТКА ИЗБРАННОГО
+// 5. ОБРАБОТКА ИЗБРАННОГО (ЗАКЛАДКИ)
 function attachSaveListeners() {
     const saveBtns = document.querySelectorAll(".save-btn");
     saveBtns.forEach(btn => {
@@ -158,10 +166,10 @@ function setupSearch() {
 }
 
 function filterCards(query) {
-    const cards = document.querySelectorAll(".opportunity-card, .deadline-card");
+    const cards = document.querySelectorAll("#view-catalog .opportunity-card, #view-home .opportunity-card");
     cards.forEach(card => {
         const title = card.querySelector(".opp-title, h3")?.textContent.toLowerCase() || "";
-        if (title.includes(query)) {
+        if (title.includes(query) || query === "") {
             card.style.display = "flex";
         } else {
             card.style.display = "none";
@@ -169,25 +177,26 @@ function filterCards(query) {
     });
 }
 
-// 7. НАЖАТИЕ НА КАТЕГОРИИ
+// 7. КЛИК ПО КАТЕГОРИЯМ
 function setupCategories() {
     const categoryItems = document.querySelectorAll(".cat-item");
     categoryItems.forEach(item => {
         item.addEventListener("click", () => {
-            // Извлекаем название категории (без иконки/эмодзи)
-            let categoryText = item.textContent.trim().replace(/^[\s\S]*?\s/, '');
-            
-            if (categoryText === "Ещё" || !categoryText) return;
+            const fullText = item.textContent.trim();
+            // Берём название категории без эмодзи
+            const categoryName = fullText.replace(/^[^\s]+\s*/, '');
 
-            // 1. Переключаем на экран Каталога
+            if (categoryName === "Ещё" || !categoryName) return;
+
+            // Переход на экран Каталога
             const catalogNavBtn = document.querySelector('.bottom-nav .nav-item[data-target="catalog"]');
             if (catalogNavBtn) catalogNavBtn.click();
 
-            // 2. Вставляем название категории в поиск Каталога и фильтруем
+            // Вставка категории в поле поиска каталога
             const catalogSearchInput = document.querySelector("#view-catalog .search-box input");
             if (catalogSearchInput) {
-                catalogSearchInput.value = categoryText;
-                filterCards(categoryText.toLowerCase());
+                catalogSearchInput.value = categoryName;
+                filterCards(categoryName.toLowerCase());
             }
         });
     });
@@ -219,7 +228,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Загрузка профиля
+    // Загрузка сохранённого профиля
     const nameInput = document.getElementById("user-name");
     const gradeInput = document.getElementById("user-grade");
     const countryInput = document.getElementById("user-country");
@@ -228,7 +237,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (gradeInput) gradeInput.value = localStorage.getItem("userGrade") || "";
     if (countryInput) countryInput.value = localStorage.getItem("userCountry") || "";
 
-    // Сохранение профиля
+    // Обработка сохранения профиля
     const profileForm = document.getElementById("profile-form");
     if (profileForm) {
         profileForm.addEventListener("submit", (e) => {
@@ -239,11 +248,11 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem("userCountry", countryInput.value);
 
             alert("Профиль успешно сохранён!");
-            updateMatchPercentages();
+            updateUserDataAndMatches();
         });
     }
 
-    updateMatchPercentages();
+    updateUserDataAndMatches();
     attachSaveListeners();
     setupSearch();
     setupCategories();
